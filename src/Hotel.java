@@ -1,5 +1,7 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Hotel {
 	
@@ -7,14 +9,12 @@ public class Hotel {
 	private int hotelId;
 	
 	private HashMap<Integer, Employee> employeesTable;
-	private HashMap<Integer, Elevator> elevatorsTable;
 	private HashMap<Integer, Booking> bookingsTable;
-	private HashMap<Integer, Floor> floorsTable;
+	private HashMap<Integer, Room> roomsTable;
 	 
 		
 	public Hotel(int id) {
-		floorsTable = new HashMap<Integer, Floor>();
-		elevatorsTable = new HashMap<Integer, Elevator>();
+		roomsTable = new HashMap<Integer, Room>();
 		bookingsTable = new HashMap<Integer, Booking>();
 		employeesTable = new HashMap<Integer, Employee>();
 		
@@ -34,12 +34,8 @@ public class Hotel {
 		bookingsTable.put(newBooking.getId(), newBooking);
 	}
 	
-	public void addFloor(Floor newFloor) {
-		floorsTable.put(newFloor.getId(), newFloor);
-	}
-	
-	public void addElevator(Elevator newElevator) {
-		elevatorsTable.put(newElevator.getId(), newElevator);
+	public void addRoom(Room newRoom) {
+		roomsTable.put(newRoom.getId(), newRoom);
 	}
 	
 	public String listEmployees() {
@@ -50,12 +46,29 @@ public class Hotel {
 		return listHashMapElements(bookingsTable);
 	}
 	
-	public String listFloors() {
-		return listHashMapElements(floorsTable);
+	public String listRooms() {
+		return listHashMapElements(roomsTable);
 	}
 	
-	public String listElevators() {
-		return listHashMapElements(elevatorsTable);
+	public String bookGuestWithResponseMessage(Guest guest, Room room) {
+		try {
+			bookGuest(guest, room);
+			return "The reservation has been successfully booked!";
+		}
+		catch (Exception ex) {
+			return "The reservation could not be booked.";
+		}
+	}
+	
+	private void bookGuest(Guest guest, Room room) {
+		Booking newBooking = new Booking(guest);				
+		newBooking.setRoom(room);
+	}
+	
+	public ArrayList<Room> getCompatibleRooms(Guest guest) {
+		GuestRoomMatcher guestRoomMatcher
+			= new GuestRoomMatcher(guest, (ArrayList<Room>)setToArrayList(roomsTable.keySet()));
+		return guestRoomMatcher.getListOfCompatibleRooms();
 	}
 	
 	public String getEmployeeById(int id) {		
@@ -66,12 +79,12 @@ public class Hotel {
 		return toStringWithNullCheck(bookingsTable.get(id));
 	}
 	
-	public String getFloorById(int id) {
-		return toStringWithNullCheck(floorsTable.get(id));
+	public String getRoomById(int id) {
+		return toStringWithNullCheck(roomsTable.get(id));
 	}
 	
-	public String getElevatorById(int id) {
-		return toStringWithNullCheck(elevatorsTable.get(id));
+	private ArrayList<?> setToArrayList(Set<?> items) {
+		return new ArrayList<Object>(items);			
 	}
 	
 	private String toStringWithNullCheck(Object element) {
