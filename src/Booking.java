@@ -11,7 +11,7 @@ public class Booking {
 		id = 0;
 		this.guest = guest;
 		room = null;
-		bill = new Bill(guest);
+		//bill = new Bill(guest);
 	}
 	
 	public int getId() {

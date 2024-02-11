@@ -38,12 +38,12 @@ public abstract class Employee {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	private void setCurrentAddress(LocalDate currentAddress) {
+	private void setCurrentAddress(Address currentAddress) {
 		this.currentAddress = currentAddress;
 	}
 	
 	private void setSSN(String socialSecNo) {
-		ssn.setNumber(socialSecNo);
+		//ssn.setNumber(socialSecNo);
 	}
 	
 	
