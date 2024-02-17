@@ -1,3 +1,4 @@
+package HotelBase;
 import java.util.ArrayList;
 
 public class GuestRoomMatcher {

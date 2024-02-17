@@ -1,3 +1,4 @@
+package HotelBase;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -58,9 +59,11 @@ public class CommandLineInterface {
 					//addEmployee();
 					break;
 				case "add_room", "add_r":
-					addRoom(hotel);
-					listRooms(hotel);
+					addRoom(hotel);				
 					break;
+				case "room_cost", "rc", "room_c":
+					changeRoomCost(hotel);
+					break;					
 				default:
 					System.out.println("Command \"" + input + "\" not recognized.");
 					
@@ -68,12 +71,32 @@ public class CommandLineInterface {
 			}
 				
 		}
-		
 
 	}
 	
+	private static void changeRoomCost(Hotel h) {
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Enter a room number: ");
+		int roomNumber = scanner.nextInt();
+		
+		try {
+			System.out.println(h.getRoomById(roomNumber).toString());
+			System.out.println("Enter a new room cost: ");
+			int newCost = scanner.nextInt();
+			
+			h.changeRoomCost(roomNumber, newCost);
+		}
+		catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}			
+		
+	}
+	
 	private static void listRooms(Hotel h) {
+		System.out.println("--------------------------------------------------\n\n");
 		System.out.println(h.listRooms());
+		System.out.println("--------------------------------------------------");			
 	}
 	
 	private static void addRoom(Hotel h) {
@@ -91,16 +114,19 @@ public class CommandLineInterface {
 		int bathroomCount = roomScanner.nextInt();
 		
 		System.out.println("What type of room is this? Options: ");
-		System.out.println("NORMAL");
-		System.out.println("SUITE");
-		System.out.println("EXECECUTIVE_SUITE");
-		System.out.println("PRESIDENTIAL_SUITE");
-		System.out.println("PENTHOUSE");
+		System.out.println("(1) NORMAL");
+		System.out.println("(2) SUITE");
+		System.out.println("(3) EXECECUTIVE_SUITE");
+		System.out.println("(4) PRESIDENTIAL_SUITE");
+		System.out.println("(5) PENTHOUSE");
 		String rTypeInput = "";
+		Room.RoomType roomType;
 		while (!isValidRoomType(rTypeInput)) {
 			System.out.println("Room Type: ");
-			rTypeInput = roomScanner.nextLine();
+			rTypeInput = roomScanner.nextLine().toUpperCase();
 		}
+		
+		roomType = getRoomType(rTypeInput);
 		
 		System.out.println("");
 		System.out.println("Please confirm the following room details (Y/N): ");
@@ -108,7 +134,7 @@ public class CommandLineInterface {
 		System.out.println("Queen beds: " + queenBedCount);
 		System.out.println("King beds: " + kingBedCount);
 		System.out.println("Bathrooms: " + bathroomCount);
-		System.out.println("Room Type: " + rTypeInput.toUpperCase());
+		System.out.println("Room Type: " + roomType.name());
 		System.out.println("");
 		
 		String confirm = "";
@@ -118,14 +144,23 @@ public class CommandLineInterface {
 		
 		if (confirm.equals("Y")) {
 			ArrayList<Bed> beds = getNewBeds(fullBedCount, queenBedCount, kingBedCount);
+			Room newRoom;
 			
-			Room newRoom = new Room(beds, bathroomCount, getRoomType(rTypeInput));
+			try {
+				newRoom = new Room(beds, bathroomCount, roomType);
+				h.addRoom(newRoom);				
+				
+				System.out.println("");
+				System.out.println("Room successfully created!");
+				System.out.println("---------------------------------------------------");
+				System.out.println(newRoom.toString());
+			}
+			catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+
 			
-			h.addRoom(newRoom);
-			
-			
-			System.out.println("");
-			System.out.println("Room successfully created!");
+
 		}
 		else {
 			System.out.println("Room creation process cancelled.  Please run \"add_room\" again if you would like to restart");
@@ -133,20 +168,20 @@ public class CommandLineInterface {
 		
 		
 		
-		roomScanner.close();
+		
 	}
 	
 	private static Room.RoomType getRoomType(String rType) {
 		switch (rType.toUpperCase()) {
-		case "NORMAL":
+		case "NORMAL", "1":
 			return Room.RoomType.NORMAL;
-		case "SUITE":
+		case "SUITE", "2":
 			return Room.RoomType.SUITE;			
-		case "EXECECUTIVE_SUITE":
+		case "EXECECUTIVE_SUITE", "3":
 			return Room.RoomType.EXECECUTIVE_SUITE;
-		case "PRESIDENTIAL_SUITE":
+		case "PRESIDENTIAL_SUITE", "4":
 			return Room.RoomType.PRESIDENTIAL_SUITE;			
-		case "PENTHOUSE":
+		case "PENTHOUSE", "5":
 			return Room.RoomType.PENTHOUSE;
 		default:
 			return Room.RoomType.NORMAL;
@@ -172,7 +207,8 @@ public class CommandLineInterface {
 	
 	
 	private static boolean isValidRoomType(String rType) {
-		return rType.equals("NORMAL") || rType.equals("SUITE") || rType.equals("EXECUTIVE_SUITE") || rType.equals("PRESIDENTIAL_SUITE") || rType.equals("PENTHOUSE");
+		return rType.equals("1") || rType.equals("2") || rType.equals("3") || rType.equals("4") || rType.equals("5") ||
+		rType.equals("NORMAL") || rType.equals("SUITE") || rType.equals("EXECUTIVE_SUITE") || rType.equals("PRESIDENTIAL_SUITE") || rType.equals("PENTHOUSE");
 	}
 	
 	private static void address(Hotel h) {
@@ -189,11 +225,10 @@ public class CommandLineInterface {
 		System.out.println("add_booking");
 		System.out.println("add_employee");
 		System.out.println("add_room");
+		System.out.println("room_cost");
 		System.out.println("employee <id>");
 		System.out.println("booking <id>");
-		System.out.println("room <id>");
-		
-		
+		System.out.println("room <id>");		
 	}
 
 }

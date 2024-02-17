@@ -1,3 +1,4 @@
+package HotelBase;
 import java.time.LocalDate;
 
 public abstract class Employee {

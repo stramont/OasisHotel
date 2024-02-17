@@ -1,3 +1,4 @@
+package HotelBase;
 
 public class Bed {
 	
@@ -15,6 +16,10 @@ public class Bed {
 	
 	public int getBedSpace() {
 		return bedType == BedType.FULL ? 1 : 2;
+	}
+	
+	public String toString() {
+		return bedType.name();
 	}
 
 }

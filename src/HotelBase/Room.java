@@ -1,3 +1,4 @@
+package HotelBase;
 import java.util.ArrayList;
 
 public class Room {
@@ -21,8 +22,8 @@ public class Room {
 	private Guest currentGuest;
 	private ArrayList<Guest> upcomingGuests;
 	
-	public Room(ArrayList<Bed> beds, int bathroomCount, RoomType roomType) {
-		roomId = 0;
+	public Room(ArrayList<Bed> beds, int bathroomCount, RoomType roomType) throws Exception {
+		roomId = IdFactory.getNextRoomId();
 		this.beds = beds;
 		this.bathroomCount = bathroomCount;
 		this.roomType = roomType;
@@ -97,6 +98,27 @@ public class Room {
 			sumOfBedSpace += bed.getBedSpace();
 				
 		return sumOfBedSpace;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder("");
+		
+		builder.append("Room Number (ID): " + roomId + "\n");
+		builder.append("Room Type: " + roomType.name() + "\n");
+		builder.append("Current Cost: $" + costPerNight + "\n");
+		builder.append("Bed Count: " + beds.size() + "\n");
+		builder.append("Beds: ");		
+		for (Bed b : beds) {
+			builder.append(b.toString());
+			builder.append("|");
+		}
+		builder.deleteCharAt(builder.length() - 1);
+		builder.append("\n");
+		builder.append("Bathroom Count: " + bathroomCount + "\n");
+		builder.append("ADA Accessible: " + adaAccessible + "\n");
+		
+		
+		return builder.toString();
 	}
 	
 }
