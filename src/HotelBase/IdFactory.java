@@ -38,5 +38,8 @@ public class IdFactory {
 		return (nextRoomMajorId) + (nextRoomMinorId++);
 	}
 	
+	public static String getXMLData() {
+		return "";
+	}
 
 }

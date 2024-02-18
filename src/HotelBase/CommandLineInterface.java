@@ -63,7 +63,10 @@ public class CommandLineInterface {
 					break;
 				case "room_cost", "rc", "room_c":
 					changeRoomCost(hotel);
-					break;					
+					break;			
+				case "save_data", "save_d":
+					saveData(hotel);
+					break;
 				default:
 					System.out.println("Command \"" + input + "\" not recognized.");
 					
@@ -72,6 +75,17 @@ public class CommandLineInterface {
 				
 		}
 
+	}
+	
+	private static void saveData(Hotel h) {
+		try {
+			h.saveHotelData();	
+			System.out.println("Hotel data successfully saved, and backed up!");
+		}
+		catch (Exception ex) {
+			System.out.println("There was an issue trying to save the hotel data.  Please contact your system admin.");
+		}
+		
 	}
 	
 	private static void changeRoomCost(Hotel h) {
@@ -228,7 +242,8 @@ public class CommandLineInterface {
 		System.out.println("room_cost");
 		System.out.println("employee <id>");
 		System.out.println("booking <id>");
-		System.out.println("room <id>");		
+		System.out.println("room <id>");	
+		System.out.println("save_data");
 	}
 
 }

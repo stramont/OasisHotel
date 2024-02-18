@@ -120,5 +120,11 @@ public class Room {
 		
 		return builder.toString();
 	}
+
+	
+	public String toXMLElement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

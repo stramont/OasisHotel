@@ -30,6 +30,11 @@ public class Booking {
 	public Bill getBill() {
 		return bill;
 	}
+
+	public String toXMLElement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

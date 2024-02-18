@@ -1,8 +1,6 @@
 package HotelBase;
-import java.time.LocalDateTime;
+import SystemClasses.HotelDataSaver;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 public class Hotel {
 	
@@ -21,6 +19,15 @@ public class Hotel {
 		
 		address = new Address("6030 Ilif Northwest", "Albuquerque", "NM", "87121");
 		hotelId = id;			
+	}
+	
+	public void saveHotelData() throws Exception {
+		HotelDataSaver dataSaver = new HotelDataSaver();
+		dataSaver.setEmployees(employees);
+		dataSaver.setRooms(rooms);
+		dataSaver.setBookings(bookings);
+		dataSaver.setIds(IdFactory.getXMLData());
+		dataSaver.saveData();
 	}
 	
 	public String getAddress() {
