@@ -25,7 +25,11 @@ public class HotelDataSaver {
 			throw new Exception("The Data Saver is missing required data! (Have you set all the required fields?)");
 		
 		XMLWriter writer = new XMLWriter(saveFilePath);
-		writer.writeToXMLFile();
+		writer.open();
+		writer.writeEmployees(employees);
+		writer.writeRooms(rooms);
+		writer.writeBookings(bookings);
+		writer.saveAndClose();
 	}
 	
 	public void setEmployees(ArrayList<Employee> employees) {
@@ -34,7 +38,7 @@ public class HotelDataSaver {
 	
 	public void setRooms(ArrayList<Room> rooms) {
 		this.rooms = rooms;
-		writer.writeToXMLFile();
+		//writer.writeToXMLFile();
 	}
 	
 	public void setBookings(ArrayList<Booking> bookings) {

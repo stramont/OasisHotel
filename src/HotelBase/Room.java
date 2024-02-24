@@ -1,5 +1,6 @@
 package HotelBase;
 import java.util.ArrayList;
+import org.w3c.dom.*;
 
 public class Room {
 	
@@ -122,9 +123,42 @@ public class Room {
 	}
 
 	
-	public String toXMLElement() {
-		// TODO Auto-generated method stub
-		return null;
+	public Node getXMLNode(Document dom) {
+		Element roomElt = dom.createElement("Room");
+		
+		Element idElt = dom.createElement("Id");
+		idElt.appendChild(dom.createTextNode(Integer.toString(roomId)));
+		roomElt.appendChild(idElt);
+		
+		Element roomTypeElt = dom.createElement("RoomType");
+		roomTypeElt.appendChild(dom.createTextNode(roomType.name()));
+		roomElt.appendChild(roomTypeElt);
+		
+		Element costElt = dom.createElement("Cost");
+		costElt.appendChild(dom.createTextNode(Integer.toString(costPerNight)));
+		roomElt.appendChild(costElt);		
+		
+		Element bathroomCountElt = dom.createElement("BathroomCount");
+		bathroomCountElt.appendChild(dom.createTextNode(Integer.toString(bathroomCount)));
+		roomElt.appendChild(bathroomCountElt);
+		
+		Element adaElt = dom.createElement("ADAAccessible");
+		adaElt.appendChild(dom.createTextNode(Boolean.toString(adaAccessible)));
+		roomElt.appendChild(adaElt);
+		
+		Element vacantElt = dom.createElement("Vacant");
+		vacantElt.appendChild(dom.createTextNode(Boolean.toString(vacant)));
+		roomElt.appendChild(vacantElt);
+		
+		Element bedsElt = dom.createElement("Beds");
+		for (Bed b : beds)
+			bedsElt.appendChild(b.getXMLNode(dom));
+		roomElt.appendChild(bedsElt);
+		
+		//to do: guest info, etc.
+		
+		
+		return roomElt;
 	}
 	
 }

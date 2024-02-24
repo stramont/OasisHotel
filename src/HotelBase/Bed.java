@@ -1,4 +1,5 @@
 package HotelBase;
+import org.w3c.dom.*;
 
 public class Bed {
 	
@@ -21,5 +22,17 @@ public class Bed {
 	public String toString() {
 		return bedType.name();
 	}
+	
+	public Node getXMLNode(Document dom) {
+		Element bedElt = dom.createElement("Bed");
+		
+		Element bedTypeElt = dom.createElement("BedType");
+		bedTypeElt.appendChild(dom.createTextNode(bedType.name()));
+		bedElt.appendChild(bedTypeElt);
+		
+		return bedElt;
+	}
+	
+	
 
 }
