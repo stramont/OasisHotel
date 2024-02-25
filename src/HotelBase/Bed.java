@@ -1,4 +1,6 @@
 package HotelBase;
+import java.util.ArrayList;
+
 import org.w3c.dom.*;
 
 public class Bed {
@@ -31,6 +33,23 @@ public class Bed {
 		bedElt.appendChild(bedTypeElt);
 		
 		return bedElt;
+	}
+	
+	public static ArrayList<Bed> getBedsFromXML(Element elt) {
+		
+		ArrayList<Bed> beds = new ArrayList<Bed>();		
+		NodeList nList = elt.getElementsByTagName("Bed");
+		
+		for (int nodeIndex = 0; nodeIndex < nList.getLength(); nodeIndex++)
+			beds.add(getBedFromXML((Element) nList.item(nodeIndex)));
+		
+		
+		return beds;
+	}
+	
+	private static Bed getBedFromXML(Element elt) {
+		BedType bedType = BedType.valueOf(elt.getTextContent().trim());
+		return new Bed(bedType);
 	}
 	
 	

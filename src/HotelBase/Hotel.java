@@ -1,5 +1,6 @@
 package HotelBase;
 import SystemClasses.HotelDataSaver;
+import SystemClasses.HotelDataLoader;
 import java.util.ArrayList;
 
 public class Hotel {
@@ -28,6 +29,13 @@ public class Hotel {
 		dataSaver.setBookings(bookings);
 		dataSaver.setIds(IdFactory.getXMLData());
 		dataSaver.saveData();
+	}
+	
+	public void loadHotelData() {
+		HotelDataLoader dataLoader = new HotelDataLoader();
+		employees = dataLoader.getEmployees();
+		rooms = dataLoader.getRooms();		
+		bookings = dataLoader.getBookings();
 	}
 	
 	public String getAddress() {

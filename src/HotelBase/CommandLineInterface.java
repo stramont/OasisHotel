@@ -67,6 +67,9 @@ public class CommandLineInterface {
 				case "save_data", "save_d":
 					saveData(hotel);
 					break;
+				case "load_data", "load_d":
+					loadData(hotel);
+					break;
 				default:
 					System.out.println("Command \"" + input + "\" not recognized.");
 					
@@ -75,6 +78,10 @@ public class CommandLineInterface {
 				
 		}
 
+	}
+	
+	private static void loadData(Hotel h) {
+		h.loadHotelData();
 	}
 	
 	private static void saveData(Hotel h) {
@@ -244,6 +251,7 @@ public class CommandLineInterface {
 		System.out.println("booking <id>");
 		System.out.println("room <id>");	
 		System.out.println("save_data");
+		System.out.println("load_data");
 	}
 
 }

@@ -27,6 +27,10 @@ public class XMLReader {
 		isOpen = false;
 	}
 	
+	public boolean isOpen() {
+		return isOpen;
+	}
+	
 	public void open() {
 		
 		try {
@@ -54,13 +58,13 @@ public class XMLReader {
 	public ArrayList<Room> readRooms() {
 		ArrayList<Room> rooms = new ArrayList<Room>();
 		
-		NodeList nList = dom.getElementsByTagName("Employee");
+		NodeList nList = dom.getElementsByTagName("Room");
 		
 		for (int nodeIndex = 0; nodeIndex < nList.getLength(); nodeIndex++) {
 			Node n = nList.item(nodeIndex);
 			if (n.getNodeType() == Node.ELEMENT_NODE) {
 				Element elt = (Element) n;
-				
+				rooms.add(Room.GetRoomFromXML(elt));				
 			}
 		}
 		

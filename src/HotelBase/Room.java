@@ -34,6 +34,29 @@ public class Room {
 		upcomingGuests = new ArrayList<Guest>();
 	}
 	
+	private Room(int id, RoomType roomType, int bathroomCount, ArrayList<Bed> beds, 
+					boolean adaAccessible, boolean vacant, int costPerNight) {
+		roomId = id;
+		this.roomType = roomType;
+		this.bathroomCount = bathroomCount;
+		this.beds = beds;
+		this.adaAccessible = adaAccessible;
+		this.vacant = vacant;
+		this.costPerNight = costPerNight;
+	}
+	
+	public static Room GetRoomFromXML(Element elt) {
+		return new Room(
+					Integer.parseInt(elt.getElementsByTagName("Id").item(0).getTextContent()),
+					RoomType.valueOf(elt.getElementsByTagName("RoomType").item(0).getTextContent()),
+					Integer.parseInt(elt.getElementsByTagName("BathroomCount").item(0).getTextContent()),
+					Bed.getBedsFromXML((Element)elt.getElementsByTagName("Beds").item(0)),
+					Boolean.valueOf(elt.getElementsByTagName("ADAAccessible").item(0).getTextContent()),
+					Boolean.valueOf(elt.getElementsByTagName("Vacant").item(0).getTextContent()),
+					Integer.parseInt(elt.getElementsByTagName("Cost").item(0).getTextContent())					
+				);					
+	}
+	
 	public int getId() {
 		return roomId;
 	}
