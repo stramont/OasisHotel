@@ -27,12 +27,13 @@ public class Hotel {
 		dataSaver.setEmployees(employees);
 		dataSaver.setRooms(rooms);
 		dataSaver.setBookings(bookings);
-		dataSaver.setIds(IdFactory.getXMLData());
+		dataSaver.setIds(IdFactory.getAllIds());
 		dataSaver.saveData();
 	}
 	
-	public void loadHotelData() {
+	public void loadHotelData() throws Exception {
 		HotelDataLoader dataLoader = new HotelDataLoader();
+		IdFactory.setAllIds(dataLoader.getIdCache());
 		employees = dataLoader.getEmployees();
 		rooms = dataLoader.getRooms();		
 		bookings = dataLoader.getBookings();

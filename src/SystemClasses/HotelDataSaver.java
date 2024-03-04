@@ -2,6 +2,7 @@ package SystemClasses;
 import java.util.ArrayList;
 
 import HotelBase.Employee;
+import HotelBase.IdCache;
 import HotelBase.Booking;
 import HotelBase.Room;
 
@@ -12,6 +13,8 @@ public class HotelDataSaver {
 	private ArrayList<Employee> employees;
 	private ArrayList<Room> rooms;
 	private ArrayList<Booking> bookings;
+	
+	private IdCache idCache;
 	
 	private String saveFilePath;
 	
@@ -29,6 +32,7 @@ public class HotelDataSaver {
 		writer.writeEmployees(employees);
 		writer.writeRooms(rooms);
 		writer.writeBookings(bookings);
+		writer.writeIds(idCache);
 		writer.saveAndClose();
 	}
 	
@@ -45,12 +49,12 @@ public class HotelDataSaver {
 		this.bookings = bookings;
 	}
 	
-	public void setIds(String idsXML) {
-		
+	public void setIds(IdCache idCache) {
+		this.idCache = idCache;
 	}
 	
 	private boolean isRequiredDataSet() {
-		return employees != null && rooms != null && bookings != null;
+		return employees != null && rooms != null && bookings != null && idCache != null;
 	}
 	
 	

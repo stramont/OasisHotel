@@ -81,7 +81,14 @@ public class CommandLineInterface {
 	}
 	
 	private static void loadData(Hotel h) {
-		h.loadHotelData();
+		try {
+			h.loadHotelData();	
+		}
+		catch (Exception ex) {
+			System.out.println("Could not load hotel data!");
+			System.out.println(ex.getMessage());
+		}
+		
 	}
 	
 	private static void saveData(Hotel h) {

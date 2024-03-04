@@ -11,6 +11,7 @@ import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
 import HotelBase.Employee;
+import HotelBase.IdCache;
 import HotelBase.Room;
 import HotelBase.Booking;
 
@@ -90,6 +91,17 @@ public class XMLWriter {
         Element e = dom.createElement("Bookings");
         e.appendChild(dom.createTextNode(role3));
         rootElt.appendChild(e);
+	}
+	
+	public void writeIds(IdCache idCache) {
+		Element e = dom.createElement("IdCache");
+		ArrayList<IdCache.Tuple<String, Integer>> idXMLTags = idCache.getTagNamesWithValues();
+		for (int i = 0; i < idXMLTags.size(); i++) {
+			Element child = dom.createElement(idXMLTags.get(i).x);
+			child.appendChild(dom.createTextNode(idXMLTags.get(i).y.toString()));
+			e.appendChild(child);
+		}
+		rootElt.appendChild(e);
 	}
 	
 	public void saveAndClose() {

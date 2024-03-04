@@ -10,6 +10,7 @@ import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
 import HotelBase.Employee;
+import HotelBase.IdCache;
 import HotelBase.Room;
 import HotelBase.Booking;
 
@@ -76,6 +77,54 @@ public class XMLReader {
 		ArrayList<Booking> bookings = new ArrayList<Booking>();
 		
 		return bookings;
+	}
+	
+	public IdCache readIds() throws Exception {
+		int billId = 0;
+		int bookingId = 0;
+		int employeeId = 0;
+		int roomMajorId = 0;
+		int roomMinorId = 0;
+		
+		NodeList nList = dom.getElementsByTagName("IdCache");
+		if (nList.getLength() >= 1) {
+			Element parent = (Element) nList.item(0);
+			NodeList children = parent.getChildNodes();
+			for (int i = 0; i < children.getLength(); i++) {
+				if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+					Element child = (Element) (children.item(i));
+					
+					switch (child.getTagName()) {
+					case "BillId":
+						billId = Integer.parseInt(child.getChildNodes().item(0).getTextContent());
+						break;
+					case "BookingId":
+						bookingId = Integer.parseInt(child.getChildNodes().item(0).getTextContent());
+						break;
+					case "EmployeeId":
+						employeeId = Integer.parseInt(child.getChildNodes().item(0).getTextContent());
+						break;
+					case "RoomMajorId":
+						roomMajorId = Integer.parseInt(child.getChildNodes().item(0).getTextContent());
+						break;
+					case "RoomMinorId":
+						roomMinorId = Integer.parseInt(child.getChildNodes().item(0).getTextContent());
+						break;
+					default:
+						throw new Exception("Unknown Id tag encountered -- aborting process.");
+						
+					}
+				}
+
+			}
+
+		}
+		else {
+			throw new Exception("Could not fetch Id Cache!");
+		}
+		
+		return new IdCache(billId, bookingId, employeeId, roomMajorId, roomMinorId);
+		
 	}
 	
 	public void close() {

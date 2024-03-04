@@ -3,6 +3,7 @@ package SystemClasses;
 import java.util.ArrayList;
 
 import HotelBase.Employee;
+import HotelBase.IdCache;
 import HotelBase.Room;
 import HotelBase.Booking;
 
@@ -29,6 +30,11 @@ public class HotelDataLoader {
 	public ArrayList<Booking> getBookings() {
 		tryOpenReader();
 		return reader.readBookings();
+	}
+	
+	public IdCache getIdCache() throws Exception {
+		tryOpenReader();
+		return reader.readIds();
 	}
 	
 	private void tryOpenReader() {

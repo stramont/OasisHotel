@@ -1,5 +1,7 @@
 package HotelBase;
 
+import SystemClasses.HotelDataLoader;
+
 public class IdFactory {
 	
 	private static int nextBillId = 1;
@@ -11,11 +13,19 @@ public class IdFactory {
 	private final static int ROOMS_PER_FLOOR = 25;
 	private final static int FLOORS = 5;
 	
+	private static boolean isInitialized = false;
 	
+	public static void setAllIds(IdCache idCache) {
+		nextBillId = idCache.billId;
+		nextBookingId = idCache.bookingId;
+		nextEmployeeId = idCache.employeeId;
+		nextRoomMajorId = idCache.roomMajorId;
+		nextRoomMinorId = idCache.roomMinorId;
+		isInitialized = true;
+	}	
 	
 	public static int getNextBillId() {
-		return nextBillId++;
-		
+		return nextBillId++;		
 	}
 	
 	public static int getNextBookingId() {
@@ -36,10 +46,10 @@ public class IdFactory {
 		}
 		
 		return (nextRoomMajorId) + (nextRoomMinorId++);
-	}
+	}	
 	
-	public static String getXMLData() {
-		return "";
+	public static IdCache getAllIds() {
+		return new IdCache(nextBillId, nextBookingId, nextEmployeeId, nextRoomMajorId, nextRoomMinorId);
 	}
 
 }
