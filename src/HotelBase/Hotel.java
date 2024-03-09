@@ -3,6 +3,8 @@ import SystemClasses.HotelDataSaver;
 import SystemClasses.HotelDataLoader;
 import java.util.ArrayList;
 
+import HotelBase.employees.Employee;
+
 public class Hotel {
 	
 	private Address address;

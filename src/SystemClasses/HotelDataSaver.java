@@ -1,10 +1,10 @@
 package SystemClasses;
 import java.util.ArrayList;
 
-import HotelBase.Employee;
 import HotelBase.IdCache;
 import HotelBase.Booking;
 import HotelBase.Room;
+import HotelBase.employees.Employee;
 
 
 public class HotelDataSaver {

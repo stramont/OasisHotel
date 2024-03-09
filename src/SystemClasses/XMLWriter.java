@@ -10,9 +10,9 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
-import HotelBase.Employee;
 import HotelBase.IdCache;
 import HotelBase.Room;
+import HotelBase.employees.Employee;
 import HotelBase.Booking;
 
 public class XMLWriter {

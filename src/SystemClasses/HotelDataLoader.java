@@ -2,9 +2,9 @@ package SystemClasses;
 
 import java.util.ArrayList;
 
-import HotelBase.Employee;
 import HotelBase.IdCache;
 import HotelBase.Room;
+import HotelBase.employees.Employee;
 import HotelBase.Booking;
 
 public class HotelDataLoader {

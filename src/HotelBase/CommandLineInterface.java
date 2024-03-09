@@ -1,6 +1,14 @@
 package HotelBase;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import HotelBase.employees.BellHopEmployee;
+import HotelBase.employees.DeskEmployee;
+import HotelBase.employees.Employee;
+import HotelBase.employees.HouseKeepingEmployee;
+import HotelBase.employees.ManagerEmployee;
 
 public class CommandLineInterface {
 
@@ -41,7 +49,7 @@ public class CommandLineInterface {
 					help();
 					break;
 				case "list_employees", "list_e":
-					//listEmployees();
+					listEmployees(hotel);
 					break;
 				case "list_rooms", "list_r":
 					listRooms(hotel);
@@ -56,7 +64,7 @@ public class CommandLineInterface {
 					//addBooking();
 					break;
 				case "add_employee", "add_e":
-					//addEmployee();
+					addEmployee(hotel);
 					break;
 				case "add_room", "add_r":
 					addRoom(hotel);				
@@ -193,9 +201,94 @@ public class CommandLineInterface {
 		else {
 			System.out.println("Room creation process cancelled.  Please run \"add_room\" again if you would like to restart");
 		}
+				
+	}
+	
+	private static void listEmployees(Hotel h) {
+		System.out.println("--------------------------------------------------\n\n");
+		System.out.println(h.listEmployees());
+		System.out.println("--------------------------------------------------");			
+	}
+	
+	private static void addEmployee(Hotel h) {
+		Scanner empScanner = new Scanner(System.in);
 		
+		System.out.println("Please enter the employee's first name: ");
+		String firstName = empScanner.nextLine();
 		
+		System.out.println("Please enter the employee's last name: ");
+		String lastName = empScanner.nextLine();
 		
+		String name = lastName + ", " + firstName;
+		
+		System.out.println("Please enter the employee's birth date in the format YYYY-MM-DD: ");
+		String dateString = empScanner.nextLine();
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-DD-YYYY");
+		LocalDate empBirthDate = LocalDate.parse(dateString);
+		
+		System.out.println("Please enter the employee's start date in the format YYYY-MM-DD: ");
+		String startDateString = empScanner.nextLine();
+		LocalDate empStartDate = LocalDate.parse(startDateString);
+		
+		System.out.println("Please enter a number to select the employee's position: ");
+		System.out.println("(1) House Keeping");
+		System.out.println("(2) Front Desk");
+		System.out.println("(3) Bell Hop");
+		System.out.println("(4) Manager");
+		int positionInt = empScanner.nextInt();
+		
+		System.out.println("");
+		System.out.println("Please confirm the following employee details (Y/N): ");
+		System.out.println("Name: " + name);
+		System.out.println("Birth Date: " + empBirthDate.toString());
+		System.out.println("Start Date: " + empStartDate.toString());
+		System.out.println("");
+		
+		String confirm = "";
+		
+		while (!confirm.equals("Y") && !confirm.equals("N"))
+			confirm = empScanner.nextLine().toUpperCase();
+		
+		if (confirm.equals("Y")) {
+			
+			try {
+				Employee newEmp;
+				switch(positionInt) {
+				case 1:
+					newEmp = new HouseKeepingEmployee(name, empBirthDate, empStartDate);
+					break;
+				case 2:
+					newEmp = new DeskEmployee(name, empBirthDate, empStartDate);
+					break;
+				case 3:
+					newEmp = new BellHopEmployee(name, empBirthDate, empStartDate);
+					break;
+				case 4:
+					newEmp = new ManagerEmployee(name, empBirthDate, empStartDate);
+					break;
+				default:
+					newEmp = new HouseKeepingEmployee(name, empBirthDate, empStartDate);
+					break;
+				}
+				
+				h.addEmployee(newEmp);			
+				
+				System.out.println("");
+				System.out.println("Room successfully created!");
+				System.out.println("---------------------------------------------------");
+				System.out.println(newEmp.toString());
+			}
+			catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+
+			
+
+		}
+		else {
+			System.out.println("Employee creation process cancelled.  Please run \"add_employee\" again if you would like to restart");
+		}
 		
 	}
 	
